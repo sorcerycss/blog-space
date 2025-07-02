@@ -22,5 +22,16 @@ infoCollector.addEventListener("submit", function (e) {
     title: postTitle,
     body: postBody,
   };
-  console.log(newPost);
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newPost),
+  };
+
+  fetch("https://apis.scrimba.com/jsonplaceholder/posts", options)
+    .then((res) => res.json())
+    .then((newPost) => console.log(newPost));
 });
