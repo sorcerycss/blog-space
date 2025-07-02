@@ -1,18 +1,24 @@
+const infoCollector = document.getElementById("info-collector");
+
+let postsArray = [];
+
+function renderPosts() {
+  let html = postsArray
+    .map((post) => {
+      return `<h2>${post.title}</h2>
+              <p>${post.body}</p>
+              <hr />`;
+    })
+    .join("");
+  document.getElementById("posts-array").innerHTML = html;
+}
+
 fetch("https://apis.scrimba.com/jsonplaceholder/posts")
   .then((res) => res.json())
   .then((data) => {
-    const postsArr = data.slice(0, 5);
-    const html = postsArr
-      .map((post) => {
-        return `<h2>${post.title}</h2>
-                    <p>${post.body}</p>
-                    <hr />`;
-      })
-      .join("");
-    document.getElementById("posts-array").innerHTML = html;
+    postsArray = data.slice(0, 5);
+    renderPosts();
   });
-
-const infoCollector = document.getElementById("info-collector");
 
 infoCollector.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -34,9 +40,7 @@ infoCollector.addEventListener("submit", function (e) {
   fetch("https://apis.scrimba.com/jsonplaceholder/posts", options)
     .then((res) => res.json())
     .then((post) => {
-      document.getElementById("posts-array").innerHTML = `<h2>${post.title}</h2>
-                    <p>${post.body}</p>
-                    <hr />
-                    ${document.getElementById("posts-array").innerHTML}`;
+      postsArray.unshift(post);
+      renderPosts();
     });
 });
