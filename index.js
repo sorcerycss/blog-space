@@ -1,5 +1,8 @@
 const infoCollector = document.getElementById("info-collector");
 
+const titleInput = document.getElementById("post-title");
+const bodyInput = document.getElementById("post-body");
+
 let postsArray = [];
 
 function renderPosts() {
@@ -22,8 +25,8 @@ fetch("https://apis.scrimba.com/jsonplaceholder/posts")
 
 infoCollector.addEventListener("submit", function (e) {
   e.preventDefault();
-  const postTitle = document.getElementById("post-title").value;
-  const postBody = document.getElementById("post-body").value;
+  const postTitle = titleInput.value;
+  const postBody = bodyInput.value;
   const data = {
     title: postTitle,
     body: postBody,
@@ -42,5 +45,7 @@ infoCollector.addEventListener("submit", function (e) {
     .then((post) => {
       postsArray.unshift(post);
       renderPosts();
+      titleInput.value = "";
+      bodyInput.value = "";
     });
 });
